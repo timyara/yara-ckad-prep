@@ -1,0 +1,53 @@
+***CKAD questions*** 
+
+###DEPLOYMENTS/PODS### 
+
+Question: 
+Deployment, NodePort 
+- Deployment needs to be created, add a NodePort + expose that port for the deployment in the X namespace.(Deployment already created). 
+* k expose deployment testdeployment --port=80 --type=NodePort --name=servicename
+* k get service servicename -n namespace 
+#check that NodePort is the Type of Service. 
+#testdeployment   NodePort    10.106.4.4   <none>        80:30601/TCP 
+#Edit the NodePort ID numder to what they provide on the exam, save the yaml. 
+
+
+Question: 
+Deployment, MaxSurge/MaxUnavailable, rolling update. 
+- Change deployment MaxSurge/MaxUnavailable (dont delete existing yaml). + rolling update + edit the replicas=2 in the given namespace. Roll the image to image they provide you, undo the image back to orginal state. 
+* kubectl set image deployment/nginx-deployment nginx=nginx:1.16.1 --record
+* kubectl rollout status deployment/nginx-deployment 
+* kubectl rollout undo deployment.v1.apps/nginx-deployment
+
+Question: 
+Find broken pod in all namespaces, output history in file they provide. 
+- Broken pod in namespace (SOMENAME), output the history in //filenameprovided.txt ---- Use echo 
+<alan>/<turing-deployment>
+cat //filenameprovided.txt
+
+###PV/PVC/POD/SSH-NODE###
+
+Question:
+pv/pcv/pod
+ssh node0
+/opt/randomstuff/data/index.html
+Code=Peanut
+
+mkdir -p /opt/randomstuff/data/
+echo "Code=Peanut" > /opt/randomstuff/data/index.html
+cat /opt/randomstuff/data/index.html
+
+terminal$ mkdir -p /opt/randomfile/data
+terminal$ echo "Code=Peanut" > /opt/randomstuff/data/index.html
+terminal$ cat /opt/randomstuff/data/index.html
+CKAD=Peanut
+
+
+Question:
+Create a file on node sk8s-node-0 at /opt/randomfile/data/index.html with the content CKAD=Stuff!
+
+PV/PVC: (access modes MUST MATCH access type)
+AccessMode: ReadWriteMany 
+storageClassName: manual 
+
+Create PV/PVC/POD, check that they are up and running. 
